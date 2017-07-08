@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style type="text/css">
+    .main {
+        /*background: url("./backgroundTestImage.png") no-repeat center center fixed;*/
+        background-size: contain;
+        height: 600px;
+        background-color: #DFDFDF;
+    }
+
+    div#responseTimeResults {
+        text-align: center;
+        font-weight: bold;
+        background-color: #DFDFDF;
+    }
+    li {
+        text-align: center;
+    }
+
+    div#fixedHeader {
+        padding-left: 15px;
+        padding-right: 15px;
+        background-color: #DFDFDF;
+    }
+
+    div.title {
+        text-decoration: none;
+        font-family: 'Sans-Serif';
+        font-color: rgb(106, 192, 203);
+        text-align: center;
+        font-weight: bold;
+    }
+
+
+    div.stateLabel {
+        text-align: right;
+        display: inline-block;
+        position: relative;
+        margin: 10px auto;
+    }
+    div#titleContainer {
+        text-align: center;
+        display: inline;
+        font-weight: bold;
+    }
+
+    a {
+        text-decoration: none;
+        font-family: 'Sans-Serif';
+        font-color: rgb(106, 192, 203);
+    }
+
+    @media only screen and (max-width: 768px) {
+        /* For mobile phones: */
+        [class*="col-"] {
+            width: 100%;
+        }
+        div#titleContainer {
+            text-align: center;
+        }
+
+        .main {
+            /* background-image url updates to a small size png for mobile*/
+            /*background-image: url("./backgroundTestImageMobile.png");*/
+        }
+    }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+    <div id="fixedHeader" class="col-xs-12">
+        <div class="row">
+            <div class="col-xs-12 title"> Choose a 529 Plan </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-6" id="titleContainer">
+                <form id="calc" action="index.html">
+                <div class="row">
+                    <div class="col-xs-6 stateRadio">
+                        <input type="radio" id="information" name="New York" value=1 class="form-control" checked>
+                    </div>
+                    <div class="col-xs-6 stateLabel"> New York </div>
+                </div>
+                <div class="row">
+                    <input type="submit" value="Select Your State" class="btn-success form-control col-xs-12">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="main col-xs-12">
+    </div>
+</body>
+<script type="text/javascript">
+$(document).ready(function() {
+
+    // check whether localStorage exists from https://www.sitepoint.com/an-overview-of-the-web-storage-api/
+    // function localStorageSupported() {
+    //  try {
+    //   return "localStorage" in window && window["localStorage"] !== null;
+    //  } catch (e) {
+    //   return false;
+    //  }
+    // }
+
+    // var hasLocalStorage = localStorageSupported();
+
+    // if (hasLocalStorage === true) {
+    // //check for existence of localstorage value, otherwise default to 1
+    //     var previousEntry = localStorage.getItem('lastEntry') || 1;
+
+    // } else {
+    //     var previousEntry = 1;
+    // }
+
+    //assign localstorage value or default value to element
+    // $('#information').val(previousEntry);
+
+    $('#calc').on('submit', function(event) {
+        event.preventDefault();
+        var data = $('#information')
+
+        //update local storage with new value
+        // if (hasLocalStorage ===true) {
+        //     localStorage.setItem('lastEntry', data)
+        // }
+
+        console.log(data[0].value)
+        // $.post("/api/user", {
+        //     key: data[0].value
+        // }).done(function(body, error, response) {
+        //     if (error !== 'success') {
+        //         console.log('error 1');
+        //         return;
+        //     }
+        //     if (body.error === true) {
+        //         console.log('error 2');
+        //         return
+        //     } else {
+        //         if (body.error) {
+        //             console.log('error 3');
+        //         } else {
+        //             var responseTime = response.getResponseHeader('X-Response-Time')
+        //             $('.main').replaceWith('<div class="main col-xs-12" >'+body.data+'</div>');
+        //         }
+        //     }
+        // });
+    });
+});
+</script>
+
+</html>
