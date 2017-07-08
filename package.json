@@ -1,0 +1,11 @@
+{
+  "name": "fivetwonine",
+  "version": "1.0.0",
+  "description": "an application for choosing 529 plans",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "eric mustin",
+  "license": "ISC"
+}
