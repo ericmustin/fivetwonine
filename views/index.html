@@ -54,6 +54,15 @@
         font-color: rgb(106, 192, 203);
     }
 
+    .ageContainer{
+      transition: 1s ease-in opacity;
+      opacity: 0;
+    }
+
+    .ageContainerShow{
+      opacity: 1;
+    }
+
     @media only screen and (max-width: 768px) {
         /* For mobile phones: */
         [class*="col-"] {
@@ -68,6 +77,14 @@
             /*background-image: url("./backgroundTestImageMobile.png");*/
         }
     }
+
+    #state{
+      background-color: #5cb85c !important;
+      border-color: #5cb85c;
+      color: #fff;
+      font-weight: 600;
+    }
+
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -78,16 +95,23 @@
             <div class="col-xs-12 title"> Choose a 529 Plan </div>
         </div>
         <div class="row">
-            <div class="form-group col-xs-6" id="titleContainer">
+            <div class="form-group col-xs-12 col-md-6" id="titleContainer">
                 <form id="calc" action="index.html">
-                <div class="row">
-                    <div class="col-xs-6 stateRadio">
-                        <input type="radio" id="information" name="New York" value=1 class="form-control" checked>
+                <div class="row stateContainer">
+                    <div class="col-xs-12 col-md-6">
+                        <label for="state"> State</label>
+                        <input type="text" id="state" value="" class="form-control" readonly>
                     </div>
-                    <div class="col-xs-6 stateLabel"> New York </div>
+                    <label for="options"> Choose Your State</label>
+                    <select class="col-xs-12 col-md-6" id="optionsState"> </select>
                 </div>
-                <div class="row">
-                    <input type="submit" value="Select Your State" class="btn-success form-control col-xs-12">
+                <div class="row ageContainer">
+                    <div class="col-xs-12 col-md-6">
+                        <label for="age"> Age</label>
+                        <input type="text" id="age" value="" class="form-control" readonly>
+                    </div>
+                    <label for="options"> Choose Your Beneficaries Age</label>
+                    <select class="col-xs-12 col-md-6" id="optionsAge"> </select>
                 </div>
                 </form>
             </div>
@@ -98,59 +122,67 @@
 </body>
 <script type="text/javascript">
 $(document).ready(function() {
+  var symbolList = ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
 
-    // check whether localStorage exists from https://www.sitepoint.com/an-overview-of-the-web-storage-api/
-    // function localStorageSupported() {
-    //  try {
-    //   return "localStorage" in window && window["localStorage"] !== null;
-    //  } catch (e) {
-    //   return false;
-    //  }
-    // }
+  var ageList = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]
 
-    // var hasLocalStorage = localStorageSupported();
+  symbolList.forEach(function(newSymbol) {
+    var opt = document.createElement('option');
+    opt.text = newSymbol;
+    opt.value = newSymbol;
+    opt.class = 'stateOption';
+    $('#optionsState').append(opt, null);
+  });
 
-    // if (hasLocalStorage === true) {
-    // //check for existence of localstorage value, otherwise default to 1
-    //     var previousEntry = localStorage.getItem('lastEntry') || 1;
+  ageList.forEach(function(newSymbol) {
+    var opt = document.createElement('option');
+    opt.text = newSymbol;
+    opt.value = newSymbol;
+    opt.className = 'optionAge';
+    $('#optionsAge').append(opt, null);
+  });
 
-    // } else {
-    //     var previousEntry = 1;
-    // }
 
-    //assign localstorage value or default value to element
-    // $('#information').val(previousEntry);
+  $('#optionsState').on('change', function() {
+    if ($('#state').val() == ''){
+      $('.ageContainer').addClass('ageContainerShow');
+    }
 
-    $('#calc').on('submit', function(event) {
-        event.preventDefault();
-        var data = $('#information')
+    var x = $('select[id*="optionsState"] option:selected').val();
+    $('#state').val(x);
+  });
 
-        //update local storage with new value
-        // if (hasLocalStorage ===true) {
-        //     localStorage.setItem('lastEntry', data)
-        // }
+  $('#optionsAge').on('change', function() {
+    var x = $('select[id*="optionsAge"] option:selected').val();
+    console.log(x)
+    $('#age').val(x);
+  });
 
-        console.log(data[0].value)
-        // $.post("/api/user", {
-        //     key: data[0].value
-        // }).done(function(body, error, response) {
-        //     if (error !== 'success') {
-        //         console.log('error 1');
-        //         return;
-        //     }
-        //     if (body.error === true) {
-        //         console.log('error 2');
-        //         return
-        //     } else {
-        //         if (body.error) {
-        //             console.log('error 3');
-        //         } else {
-        //             var responseTime = response.getResponseHeader('X-Response-Time')
-        //             $('.main').replaceWith('<div class="main col-xs-12" >'+body.data+'</div>');
-        //         }
-        //     }
-        // });
-    });
+  $('#calc').on('submit', function(event) {
+    event.preventDefault();
+    var data = $('#state')
+
+    console.log(data)
+    // $.post("/api/user", {
+    //     key: data[0].value
+    // }).done(function(body, error, response) {
+    //     if (error !== 'success') {
+    //         console.log('error 1');
+    //         return;
+    //     }
+    //     if (body.error === true) {
+    //         console.log('error 2');
+    //         return
+    //     } else {
+    //         if (body.error) {
+    //             console.log('error 3');
+    //         } else {
+    //             var responseTime = response.getResponseHeader('X-Response-Time')
+    //             $('.main').replaceWith('<div class="main col-xs-12" >'+body.data+'</div>');
+    //         }
+    //     }
+    // });
+  });
 });
 </script>
 
