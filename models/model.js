@@ -6,14 +6,23 @@ var userSchema = new mongoose.Schema( {
   key: String,
   firstName: String,
   lastName: String,
-  state: Number,
   childAge: Number,
-  plan: Number,
+  state: Number,
   amount: Number
-
-
 } );
 
-var User = mongoose.model('User', userSchema);
+var stateSchema = new mongoose.Schema( {
+  key: Number,
+  title: String,
+  bonds: Number,
+  equities: Number,
+  meta: String
+});
 
-module.exports = User;
+var User = mongoose.model('User', userSchema);
+var State = mongoose.model('State', stateSchema);
+
+module.exports = {
+  user: User,
+  state: State
+}

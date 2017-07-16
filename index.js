@@ -9,6 +9,7 @@ var router = express.Router();
 
 var routes = function(app) {
   app.post('/user', controller.userInfo)
+  app.get('/setState', controller.setState)
 };
 
 app.use(partials());

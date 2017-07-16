@@ -59,7 +59,7 @@
       opacity: 0;
     }
 
-    .ageContainerShow{
+    .containerShow{
       opacity: 1;
     }
 
@@ -85,9 +85,21 @@
       font-weight: 600;
     }
 
+    #chartContainer {
+      height: 290px;
+    }
+
+    #pieChartContainer {
+      position: absolute;
+      left: 50%;
+      height: 100%;
+      transform: translateX(-50%);
+    }
+
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
     <div id="fixedHeader" class="col-xs-12">
@@ -97,23 +109,36 @@
         <div class="row">
             <div class="form-group col-xs-12 col-md-6" id="titleContainer">
                 <form id="calc" action="index.html">
-                <div class="row stateContainer">
-                    <div class="col-xs-12 col-md-6">
-                        <label for="state"> State</label>
-                        <input type="text" id="state" value="" class="form-control" readonly>
+                    <div class="row stateContainer">
+                        <div class="col-xs-12 col-md-6">
+                            <label for="state"> State</label>
+                            <input type="text" id="state" value="" class="form-control" readonly>
+                        </div>
+                        <label for="options"> Choose Your State</label>
+                        <select class="col-xs-12 col-md-6" id="optionsState"> </select>
                     </div>
-                    <label for="options"> Choose Your State</label>
-                    <select class="col-xs-12 col-md-6" id="optionsState"> </select>
-                </div>
-                <div class="row ageContainer">
-                    <div class="col-xs-12 col-md-6">
-                        <label for="age"> Age</label>
-                        <input type="text" id="age" value="" class="form-control" readonly>
+                    <div class="row ageContainer">
+                        <div class="col-xs-12 col-md-6">
+                            <label for="age"> Age</label>
+                            <input type="text" id="age" value="" class="form-control" readonly>
+                        </div>
+                        <label for="options"> Choose Your Beneficaries Age</label>
+                        <select class="col-xs-12 col-md-6" id="optionsAge"> </select>
                     </div>
-                    <label for="options"> Choose Your Beneficaries Age</label>
-                    <select class="col-xs-12 col-md-6" id="optionsAge"> </select>
-                </div>
+                    <div class="row submitContainer">
+                        <div class="col-xs-12">
+                            <input type="submit" value="Find Your Plan" class="btn-success form-control">
+                        </div>
+                    </div>
                 </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12" id="chartContainer">
+              <div id="pieChartContainer">
+                <div id="pieChart">
+                </div>
+              </div>
             </div>
         </div>
     </div>
@@ -122,6 +147,14 @@
 </body>
 <script type="text/javascript">
 $(document).ready(function() {
+  var pieChart = $("#pieChart");
+  var pieChartData = [];
+  var pieChartLayout = {
+    height: 290,
+    width: 290
+  };
+
+
   var symbolList = ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
 
   var ageList = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]
@@ -145,7 +178,7 @@ $(document).ready(function() {
 
   $('#optionsState').on('change', function() {
     if ($('#state').val() == ''){
-      $('.ageContainer').addClass('ageContainerShow');
+      $('.ageContainer').addClass('containerShow');
     }
 
     var x = $('select[id*="optionsState"] option:selected').val();
@@ -153,35 +186,55 @@ $(document).ready(function() {
   });
 
   $('#optionsAge').on('change', function() {
+    if ($('#age').val() == ''){
+        $('.submitContainer').addClass('containerShow');
+    }
+
     var x = $('select[id*="optionsAge"] option:selected').val();
-    console.log(x)
     $('#age').val(x);
   });
 
   $('#calc').on('submit', function(event) {
     event.preventDefault();
-    var data = $('#state')
+    var stateData = $('#state');
+    var ageData = $('#age');
 
-    console.log(data)
-    // $.post("/api/user", {
-    //     key: data[0].value
-    // }).done(function(body, error, response) {
-    //     if (error !== 'success') {
-    //         console.log('error 1');
-    //         return;
-    //     }
-    //     if (body.error === true) {
-    //         console.log('error 2');
-    //         return
-    //     } else {
-    //         if (body.error) {
-    //             console.log('error 3');
-    //         } else {
-    //             var responseTime = response.getResponseHeader('X-Response-Time')
-    //             $('.main').replaceWith('<div class="main col-xs-12" >'+body.data+'</div>');
-    //         }
-    //     }
-    // });
+    var userInfo = {};
+
+    userInfo.age = ageData[0].value;
+    userInfo.state = stateData[0].value;
+    userInfo.key = 1;
+
+    $.post("/api/user", {
+        userInfo: userInfo
+    }).done(function(body, error, response) {
+        if (body.error === true) {
+            console.log('error 2');
+            return
+        } else {
+            if (body.error) {
+                console.log('error 3');
+            } else {
+                pieChart.empty()
+                var responseTime = response.getResponseHeader('X-Response-Time');
+
+                console.log('we recieve', body)
+                pieChartData = [{
+                  values: body.pieChartData.values,
+                  labels: body.pieChartData.labels,
+                  // values: [70,30],
+                  // labels: ['equities','bonds'],
+                  type: 'pie'
+                }];
+
+                pieChartLayout.title = body.state
+                metaData = body.meta.split("-")
+                console.log(metaData)
+
+                Plotly.newPlot('pieChart', pieChartData, pieChartLayout);
+            }
+        }
+    });
   });
 });
 </script>
