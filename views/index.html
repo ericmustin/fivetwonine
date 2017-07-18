@@ -132,6 +132,19 @@
                     </div>
                 </form>
             </div>
+            <div class="col-xs-12 col-md-6" id="titleContainer">
+              <div class="row">
+                <div class="col-xs-4 btn-default">
+                  In State Tax Advantage?
+                </div>
+                <div class="col-xs-4 btn-success">
+                  Low Minimum Contribution?
+                </div>
+                <div class="col-xs-4 btn-warning">
+                  Online Contributions?
+                </div>
+              </div>
+            </div>
         </div>
         <div class="row">
             <div class="col-xs-12" id="chartContainer">
@@ -154,10 +167,16 @@ $(document).ready(function() {
     width: 290
   };
 
+  var stateFtnInfo = []
+
+
+
 
   var symbolList = ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
 
   var ageList = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18]
+
+  var symbolListGlobalObject = {}
 
   symbolList.forEach(function(newSymbol) {
     var opt = document.createElement('option');
@@ -173,6 +192,19 @@ $(document).ready(function() {
     opt.value = newSymbol;
     opt.className = 'optionAge';
     $('#optionsAge').append(opt, null);
+  });
+
+  $.get("https://gist.githubusercontent.com/ericmustin/11de8ea1fc55423279ea01367e8e2d47/raw/956b51ea048fd851c218f4b71b245dd6adfa3b9b/rawdata.json").done(function(body, error, response) {
+    stateFtnInfo = JSON.parse(body);
+
+    stateFtnInfo.forEach( function(stateFtnInfoObject) {
+      if (symbolListGlobalObject[stateFtnInfoObject.State] === undefined) {
+        symbolListGlobalObject[stateFtnInfoObject.State] = stateFtnInfoObject
+      } else {
+        console.log('warn, global state obj key already exists')
+      }
+
+    })
   });
 
 
@@ -205,6 +237,7 @@ $(document).ready(function() {
     userInfo.state = stateData[0].value;
     userInfo.key = 1;
 
+
     $.post("/api/user", {
         userInfo: userInfo
     }).done(function(body, error, response) {
@@ -227,7 +260,8 @@ $(document).ready(function() {
                   type: 'pie'
                 }];
 
-                pieChartLayout.title = body.state
+                console.log(symbolListGlobalObject)
+                pieChartLayout.title = body.state + "\n" + symbolListGlobalObject[userInfo.state]["Plan name"]
                 metaData = body.meta.split("-")
                 console.log(metaData)
 
