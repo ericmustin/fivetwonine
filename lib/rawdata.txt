@@ -1,0 +1,51 @@
+"State", "Plan name ", "Does this state offer a tax benefit for in-state contributors?" ,"Minimum contribution"
+"Alabama","CollegeCounts 529 plan  ",Yes, 0
+"Alaska  ","University of Alaska College Savings Plan ",No,  25
+"Arizona ","Arizona Family College Savings Program  ",Any state’s plan,  50
+"Arkansas "," GIFT College Investing plan ",Yes, 25
+"California","  ScholarShare College Savings Plan ",No,  25
+"Colorado "," CollegeInvest Direct Portfolio College Savings plan ",Yes, 25
+"Connecticut"," Connecticut Higher Education Trust  ",Yes, 25
+"Delaware","  Delaware College Investment Plan  ",No,  50
+"District of Columbia "," DC 529 College Savings Program  ",Yes, 100
+"Florida ","Florida 529 Savings Plan  ",No,  250
+"Georgia"," Path2College 529 plan ",Yes, 25
+"Hawaii "," Hawaii’s College Savings Program  ",No,  15
+"Idaho ","Idaho College Savings Program ",Yes, 25
+"Illinois "," Bright Start College Savings Program  ",Yes, 25
+"Indiana"," CollegeChoice 529 Direct Savings plan ",Yes, 25
+"Iowa  ","College Savings Iowa 529 plan ",Yes, 25
+"Kansas "," Learning Quest 529 Education Savings Program  ",Any state’s plan,  25
+"Kentucky "," Kentucky Education Savings Plan Trust ",No,  25
+"Louisiana ","START Savings Program ",Yes, 10
+"Maine ","NextGen College Investing Plan  ",Any state’s plan,  25
+"Maryland  ","College Savings plans of Maryland ",Yes, 250
+"Massachusetts ","Massachusetts U.Fund College Investing Plan ",No,  50
+"Michigan "," Michigan Education Savings Program  ",Yes, 25
+"Minnesota ","Minnesota College Savings Plan  ",No,  25
+"Mississippi","Mississippi Affordable College Savings Program  ",Yes, 25
+"Missouri "," MOST 529 College Savings Plan ",Any state’s plan,  25
+"Montana ","Montana Family Education Savings Program  ",Any state’s plan,  25
+"Nebraska","  Nebraska Education Savings Trust – Direct College Savings plan  ",Yes, 0
+"Nevada  ","Nevada College Savings Plan ",No,  15
+"New Hampshire"," UNIQUE College Investing Plan ",No,  50
+"New Jersey "," NJ BEST College Savings Plan  ",No,  25
+"New Mexico "," The Education plan  ",Yes, 25
+"New York "," New York’s 529 College Savings Program  ",Yes, 25
+"North Carolina "," College Foundation of North Carolina  ",No,  25
+"North Dakota "," College SAVE  ",Yes, 25
+"Ohio "," Ohio CollegeAdvantage 529 Savings plan  ",Yes, 25
+"Oklahoma "," Oklahoma College Savings plan ",Yes, 100
+"Oregon "," Oregon College Savings plan ",Yes, 25
+"Pennsylvania "," PA 529  ",Any state’s plan,  25
+"Rhode Island "," CollegeBound Fund ",Yes, 25
+"South Carolina "," Future Scholar 529 College Savings plan ",Yes, 0
+"South Dakota "," College Access 529  ",No,  250
+"Tennessee ","TN Stars College Savings 529 Program  ",No,  25
+"Texas ","Texas College Savings Plan  ",No,  25
+"Utah  ","Utah Educational Savings plan (UESP)  ",Yes, 0
+"Vermont ","Vermont Higher Education Investment plan  ",Yes, 25
+"Virginia "," Virginia529 inVEST  ",Yes, 25
+"West Virginia"," SMART529 WV Direct College Savings plan ",Yes, 50
+"Wisconsin ","Edvest College Savings plan ",Yes, 25
+"Wyoming ","see Colorado plan ",No,  0
